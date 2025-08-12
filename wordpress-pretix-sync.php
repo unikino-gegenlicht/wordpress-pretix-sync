@@ -27,7 +27,7 @@ function extend_metaboxes( $meta_boxes ): mixed {
 			],
 			[
 				'type' => 'url',
-				'name' => esc_html__( 'URL to Pretix Page' ),
+				'name' => esc_html__( 'URL to Pretix Page', "wordpress-pretix-sync" ),
 				'id'   => "reservation_url",
 				'visible' => ["allow_reservations"],
 			]
@@ -39,3 +39,9 @@ function extend_metaboxes( $meta_boxes ): mixed {
 }
 
 add_filter( 'rwmb_meta_boxes', 'extend_metaboxes' );
+
+function wordpress_pretix_sync_load_textdomain() {
+	load_plugin_textdomain( 'wordpress-pretix-sync', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+}
+add_action('plugins_loaded', 'wordpress_pretix_sync_load_textdomain');
