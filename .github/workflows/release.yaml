@@ -1,0 +1,79 @@
+name: Release Plugin
+on: push
+
+jobs:
+  create-archive:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: wp-cli
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Create License Artifact
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-artifact@v4
+        with:
+          name: licensing-info
+          path: LICENSE
+
+      - name: Create Directory Structure and Archive
+        shell: bash
+        run: |
+          rm LICENSE
+          rm README.md
+          mkdir pretix-sync
+          shopt -s extglob
+          mv !(pretix-sync|.git|.github) pretix-sync/
+          wp i18n make-mo pretix-sync/languages/ pretix-sync/languages/
+          zip -r pretix-sync.zip pretix-sync/*
+
+      - name: Create Release Artifact
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: pretix-sync.zip
+          retention-days: 1
+
+      - name: Create Artifact
+        if: startsWith(github.ref, 'refs/heads/')
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-artifacts
+          path: pretix-sync.zip
+          retention-days: 7
+
+  release-archive:
+
+    permissions:
+      contents: write
+
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - create-archive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Add Tag to Archive
+        run: |
+          mv pretix-sync.zip  pretix-sync.${{ github.ref_name }}.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
+          draft: true
+          files: |
+            pretix-sync.${{ github.ref_name }}.zip
+            LICENSE
