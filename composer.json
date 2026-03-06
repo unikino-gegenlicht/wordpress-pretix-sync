@@ -1,0 +1,13 @@
+{
+    "name": "unikino-gegenlicht/wordpress-pretix-sync",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "Jan Eike Suchard",
+            "email": "60288203+dr4hcu5-jan@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}
