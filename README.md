@@ -9,10 +9,7 @@
 </div>
 
 This plugin allows linking movies and events to pretix pages.
-It amends the custom post types we use and allows manually specifying the url on which tickets for this event are
-available on.
-
-## Roadmap
-
-- [ ] Automatic Creation of Events in Pretix
-- [ ] Automatic Update of Event in Pretix (incl. notifying ticket holders of changes)
+It amends the custom post types we use and allows manually specifying the url on
+which tickets for this event are available on.
+Additionally, the plugin provides an AJAX-action to allow guessing the correct
+event url.
