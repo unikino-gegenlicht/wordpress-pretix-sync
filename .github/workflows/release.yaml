@@ -31,7 +31,7 @@ jobs:
           mkdir wordpress-pretix-sync
           shopt -s extglob
           mv !(wordpress-pretix-sync|.git|.github) wordpress-pretix-sync/
-          wp i18n make-mo wordpress-pretix-sync/languages/ wordpress-pretix-sync/languages/
+          wp i18n make-mo wordpress-pretix-sync/src/languages/ wordpress-pretix-sync/src/languages/
           zip -r pretix-sync.zip wordpress-pretix-sync/*
 
       - name: Create Release Artifact
