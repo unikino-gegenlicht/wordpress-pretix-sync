@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wordpress Pretix Sync 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-pretix-"
+"sync\n"
+"POT-Creation-Date: 2026-03-04T16:41:02+00:00\n"
+"PO-Revision-Date: 2026-03-04 17:41+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Domain: wordpress-pretix-sync\n"
+
+#. Plugin Name of the plugin
+#: wordpress-pretix-sync.php
+msgid "Wordpress Pretix Sync"
+msgstr "Wordpress Pretix Synchronisation"
+
+#. Plugin URI of the plugin
+#: wordpress-pretix-sync.php
+msgid "https://github.com/unikino-gegenlicht/wordpress-pretix-sync"
+msgstr "https://github.com/unikino-gegenlicht/wordpress-pretix-sync"
+
+#. Description of the plugin
+#: wordpress-pretix-sync.php
+msgid "Allow linking to pretix for ticket sales"
+msgstr "Verlinke Events und Filme nach Pretix für Reservierungen"
+
+#. Author of the plugin
+#: wordpress-pretix-sync.php
+msgid "Jan Eike Suchard"
+msgstr "Jan Eike Suchard"
+
+#. Author URI of the plugin
+#: wordpress-pretix-sync.php
+msgid "https://suchard.cloud"
+msgstr "https://suchard.cloud"
+
+#: src/functions.php:15
+msgid "Reservations"
+msgstr "Reservierungen"
+
+#: src/functions.php:21
+msgid "Link to the Reservation Page"
+msgstr "Link zur Reservierungsseite"
+
+#: src/functions.php:26
+msgid ""
+"Please enter the URL to the pretix detail page. You can either use the "
+"button below to let WordPress guess the URL or manually go to <a "
+"target=\"_blank\" href=\"https://"
+"tickets.gegenlicht.net\">tickets.gegenlicht.net</a> and copy the appropriate "
+"link manually. <b>If no link is set the reservation button will not appear!</"
+"b>"
+msgstr ""
+"Bitte gebe die URL zu der pretix Eventseite ein. Du kannst hierfür entweder "
+"den Button unter dem Eingabefeld nutzen oder manuell auf  <a "
+"target=\"_blank\" href=\"https://"
+"tickets.gegenlicht.net\">tickets.gegenlicht.net</a> gehen und dort den "
+"entsprechenden Link zu der Detailseite kopieren. <b>Sollte hier kein Link "
+"eingetragen sein, wird der Reservierungsbutton nicht angezeigt!</b>"
+
+#: src/functions.php:31
+msgid "Guess Pretix Event"
+msgstr "Link erraten"
+
+#~ msgid "Allow Reservations"
+#~ msgstr "Reservierungen erlauben"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nein"
+
+#~ msgid "URL to Pretix Page"
+#~ msgstr "URL zu Pretix-Detailseite"
