@@ -13,7 +13,6 @@ Domain Path: /src/languages
 
 
 require "vendor/autoload.php";
-require_once "src/functions.php";
 require_once "src/PretixAPI.php";
 
 add_action('init', 'wordpress_pretix_sync_load_textdomain');
@@ -25,6 +24,9 @@ function wordpress_pretix_sync_load_textdomain(): void
 add_action('rwmb_meta_boxes', 'wordpress_pretix_sync_add_movie_metaboxes', priority: 30);
 function wordpress_pretix_sync_add_movie_metaboxes( $metaboxes ) {
     for ( $i = 0; $i < count( $metaboxes ); $i ++ ) {
+        if (!key_exists("id", $metaboxes[$i])) {
+            continue;
+        }
         if ( ! in_array( $metaboxes[ $i ]["id"], [ "movie_meta", "event_meta" ] ) ) {
             continue;
         }
@@ -138,13 +140,38 @@ function wordpress_pretix_sync__guess_pretix_event_url()
         wp_cache_add("wordpress-pretix-sync_events", $events, expire: 60 * 60 * 6);
     }
 
+    $data = [
+        "usedCache" => $events_cached,
+    ];
+
     foreach ($events as $event) {
         $event_start_time = date_create_immutable_from_format("Y-m-d\TH:i:sT", $event["date_from"]);
         if ($event_start_time->getTimestamp() != $expected_start_time->getTimestamp()) {
             continue;
         }
 
-        echo json_encode(["eventUrl" => $event["public_url"], "usedCache" => $events_cached]);
+        $data["eventUrl"] = $event["public_url"];
+
     }
-    wp_die();
+
+    if (!isset($data["eventUrl"])) {
+        $pretix_host = get_option("pretix_base_url");
+        $pretix_secret = get_option("pretix_token");
+        $pretix_organizer = get_option("pretix_organizer_slug");
+
+        $pretix = new PretixAPI($pretix_host, $pretix_secret);
+        $events = $pretix->getEvents($pretix_organizer);
+
+        foreach ($events as $event) {
+            $event_start_time = date_create_immutable_from_format("Y-m-d\TH:i:sT", $event["date_from"]);
+            if ($event_start_time->getTimestamp() != $expected_start_time->getTimestamp()) {
+                continue;
+            }
+
+            $data["eventUrl"] = $event["public_url"];
+
+        }
+    }
+
+    wp_send_json($data);
 }

@@ -12,9 +12,10 @@ jQuery(function($) {
             _ajax_nonce: pretixEventAjax.nonce,
             action: "guess-pretix-event-url",
             screeningStart: datetime_field.value
-        }, function (res) {
-            let data = JSON.parse(res)
-            url_input.value = data.eventUrl;
+        }, function (data) {
+            if (data.eventUrl) {
+                url_input.value = data.eventUrl;
+            }
         })
     })
 })
