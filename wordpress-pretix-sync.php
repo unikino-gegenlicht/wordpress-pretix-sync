@@ -175,3 +175,15 @@ function wordpress_pretix_sync__guess_pretix_event_url()
 
     wp_send_json($data);
 }
+
+function ggl_get_event_booking_url(int|WP_Post $post = 0 ): string {
+// Resolve the provided post or fall back to the global post
+    $post = get_post( $post, filter: 'display' );
+
+    // Return early if the post type is not supported by the function
+    if ( ! in_array( $post->post_type, [ "movie", "event" ] ) ) {
+        return "";
+    }
+
+    return get_post_meta($post->ID, "pretix_event_url", true);
+}
